@@ -1,0 +1,85 @@
+-- Global GDP By Year
+-- Shows the total world GDP from 1960-2022
+
+SELECT
+  GDP.year,
+  SUM(GDP.value) AS global_gdp
+FROM
+  `world-gdp-399717.WorldGDP.GDP` AS GDP
+JOIN
+  `world-gdp-399717.WorldGDP.country_codes` AS Code
+ON
+  GDP.country_code = Code.country_code
+WHERE
+  GDP.year BETWEEN 1960 AND 2022
+GROUP BY
+  GDP.year
+ORDER BY
+  GDP.year;
+
+-- United States GDP 1960-2022
+-- Retrieves and orders the GDP values for the United States from 1960 to 2022, allowing for an analysis of the country's economic performance over the specified period
+
+SELECT
+  Year,
+  Value
+FROM world-gdp-399717.WorldGDP.GDP
+WHERE country_name= "United States"
+ORDER BY Year ASC
+
+-- Average GDP Growth Rate for Low-Income Regions 
+-- Calculates the average GDP growth rate for low-income regions, rounding the results to two decimal places for precision
+
+WITH Growth_Data AS (
+  SELECT
+    GDP.country_Code,
+    GDP.Value,
+    GDP.Year,
+    Code.region AS Region,
+    Code.income_group,
+    ((GDP.value - LAG(GDP.Value, 1) OVER (PARTITION BY GDP.Country_Code ORDER BY GDP.Year)) / LAG(GDP.Value, 1) OVER (PARTITION BY GDP.Country_Code ORDER BY GDP.Year)) * 100 AS GDP_Growth_Rate
+  FROM 
+    `world-gdp-399717.WorldGDP.GDP` AS GDP
+  JOIN
+    `world-gdp-399717.WorldGDP.country_codes` AS Code
+  ON
+    GDP.country_code = Code.country_Code
+)
+
+SELECT
+  Region,
+  ROUND(AVG(GDP_Growth_Rate),2) AS Avg_GDP_Growth
+FROM
+  Growth_Data
+WHERE LOWER(income_group) = 'low income'
+GROUP BY
+  Region
+ORDER BY
+  Avg_GDP_Growth DESC;
+
+-- Top GDP Countries in 2022
+-- This query identifies and ranks countries with the highest GDP values in the year 2022
+
+SELECT
+  GDP.year, GDP.country_name, GDP.value
+FROM
+  `world-gdp-399717.WorldGDP.GDP` AS GDP
+JOIN
+  `world-gdp-399717.WorldGDP.country_codes` AS Code
+ON GDP.country_code = Code.country_code
+WHERE Year=2022
+ORDER BY value DESC
+
+-- Top Regions by Total GDP in 2022
+-- Calculates and ranks regions based on their total GDP values for the year 2022, providing insights into regional economic performance
+
+Select 
+  Code.Region,
+  SUM(GDP.value) AS Total_Region_GDP_2022
+FROM world-gdp-399717.WorldGDP.GDP AS GDP
+JOIN world-gdp-399717.WorldGDP.country_codes AS Code
+ON GDP.country_code = Code.Country_Code
+WHERE GDP.year = 2022
+GROUP BY Code.Region
+ORDER BY Total_Region_GDP_2022 DESC
+
