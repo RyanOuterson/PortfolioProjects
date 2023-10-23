@@ -1,7 +1,7 @@
 # World GDP Analysis
 
 ## Overview
-This project involves an in-depth analysis of global Gross Domestic Product (GDP) data sourced from the World Bank Group, which was obtained from the Kaggle dataset [here]([link-to-the-dataset](https://www.kaggle.com/datasets/sazidthe1/world-gdp-data)). The goal is to gain insights into the economic performance of countries, regions, and income groups over several decades, from 1960 to 2022. The project combines SQL data querying and visualization using Tableau Public to present key findings.
+This project involves an in-depth analysis of global Gross Domestic Product (GDP) data sourced from the World Bank Group, which was obtained from the Kaggle dataset [here](https://www.kaggle.com/datasets/sazidthe1/world-gdp-data). The goal is to gain insights into the economic performance of countries, regions, and income groups over several decades, from 1960 to 2022. The project combines SQL data querying and visualization using Tableau Public to present key findings.
 
 ### Data Sources
 The project utilizes two primary datasets:
