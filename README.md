@@ -13,7 +13,7 @@ The project utilizes two primary datasets:
 
 ## Key Questions Explored
 
-The project seeks to answer five critical questions:
+The project seeks to analyze five areas:
 
 1. **Trend in Global GDP (1960-2022)**: Analyze the global GDP trend over the decades to identify patterns and fluctuations.
    
